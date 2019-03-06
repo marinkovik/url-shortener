@@ -5,6 +5,7 @@
 # Short Demo
 
 
+
 # RESTful API
 POST api/url with form data "long_url" and it automatically generates short links using Base26 encoding and it comes into /?s=A (for example yourdomain.com/?s=A)
 ```
