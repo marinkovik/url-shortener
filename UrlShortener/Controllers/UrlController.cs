@@ -14,6 +14,7 @@ namespace UrlShortener.Controllers.Api
 {
     public class UrlController : ApiController
     {
+        // GET api/url
         public IEnumerable<Urls> Get()
         {
             var fileContents = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.MapPath(@"~/JsonFiles/Urls.json"));
@@ -25,7 +26,6 @@ namespace UrlShortener.Controllers.Api
         [HttpPost]
         public ActionResult Post([FromBody] string value)
         {
-            //strings.Add(value);
             var fileContents = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.MapPath(@"~/JsonFiles/Urls.json"));
             var result = JsonConvert.DeserializeObject<List<Urls>>(fileContents);
             // result.Add(new Urls { longString = value, shortString = result.Count.ToString() });

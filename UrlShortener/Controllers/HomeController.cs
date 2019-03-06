@@ -31,6 +31,7 @@ namespace UrlShortener.Controllers
                     }
                     return Content("Sorry, wrong link");
                 }
+                // Adding visits time
                 var fileContents = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.MapPath(@"~/JsonFiles/Urls.json"));
                 var result = JsonConvert.DeserializeObject<List<Urls>>(fileContents);
                 foreach (var tmpUrl in result)
@@ -51,30 +52,6 @@ namespace UrlShortener.Controllers
                 return View(new Urls());
         }
 
-        public ActionResult Red(int id)
-        {
-            return Content("Vlezeno vo Red 16:45");
-        }
-
-        public ActionResult redirect(string id)
-        {
-            var fileContents = System.IO.File.ReadAllText(System.Web.HttpContext.Current.Server.MapPath(@"~/JsonFiles/Urls.json"));
-            var result = JsonConvert.DeserializeObject<List<Urls>>(fileContents);
-            foreach (var tmpUrl in result)
-            {
-                if (tmpUrl.shortString == id)
-                {
-                    var tmpVisits = tmpUrl.visits + 1;
-                    tmpUrl.visits = tmpVisits;
-                    tmpUrl.visitsTime.Add(DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss"));
-                    var resultForSave = JsonConvert.SerializeObject(result);
-                    System.IO.File.WriteAllText(System.Web.HttpContext.Current.Server.MapPath(@"~/JsonFiles/Urls.json"), resultForSave);
-                    return Redirect("http://" + tmpUrl.longString);
-                }
-            }
-            return Content(id + "Error with reading");
-        }
-
         [HttpPost]
         public ActionResult Index(string fieldForLongUrl)
         {
@@ -88,7 +65,5 @@ namespace UrlShortener.Controllers
             }
             return Content("Error");
         }
-
-
     }
 }
