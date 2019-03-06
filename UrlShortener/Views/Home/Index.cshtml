@@ -1,0 +1,29 @@
+﻿@model UrlShortener.Models.Urls
+@using (Html.BeginForm())
+{
+    <input type="text" name="fieldForLongUrl" id="txtUrl" />
+    <input type="submit" value="Generate short link" onclick="AddUrl()"/>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+
+    function AddUrl() {
+        jQuery.support.cors = true;
+        var tmpUrl = $('#txtUrl').val();
+
+        $.ajax({
+            url: 'http://localhost:49221/api/url',
+            type: 'POST',
+            data: JSON.stringify(tmpUrl),
+            contentType: "application/json",
+            success: function (data) {
+
+            },
+            error: function (x, y, z) {
+                alert(x + y + z);
+            }
+        });
+    }
+</script>
